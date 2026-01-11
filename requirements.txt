@@ -1,0 +1,4 @@
+gspread==6.2.1
+gspread_dataframe==4.0.0
+pandas==2.3.3
+python-telegram-bot==22.5
