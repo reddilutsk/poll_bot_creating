@@ -1,3 +1,8 @@
+import asyncio
+from telegram import Bot
+from datetime import date, timedelta
+
+
 UA_WEEKDAYS = {
     0: "Понеділок",
     1: "Вівторок",
@@ -46,33 +51,42 @@ def update_table(df_old, df_new):
 BOT_TOKEN = '7770236578:AAGrkL_bDEq9N6NLsKYTePL8Ac6XglN4t10'
 CHAT_ID = '-1002643965663'
 THREAD_ID = '16'
-TABLE_NAME = 'Telegram Poll Results'
-
-from telegram import Bot
-from datetime import date, timedelta
-import asyncio
 
 # Параметри опитування
 QUESTION_W = ", 20:00, чисто тренування, Ерідон"
 QUESTION_T = ", 20:00, тренування/спаринг, Ерідон"
 OPTIONS = ["󠀼✅👟", "󠀼✅🧤", "󠀭️❌", "🧠"]
 
-bot = Bot(token=BOT_TOKEN)
-
 wed, thu = next_week_wed_thu(today=None)
 
 QUESTION = wed + QUESTION_W
 
-poll_message = await bot.send_poll(
-                chat_id=CHAT_ID,
-                message_thread_id=THREAD_ID,
-                question=QUESTION,
-                options=OPTIONS,
-                is_anonymous=False)
+async def main():
+    bot = Bot(token=BOT_TOKEN)
+    
+    # Надсилаємо опитування
+    await bot.send_poll(
+        chat_id=CHAT_ID,
+        question=QUESTION,
+        options=OPTIONS,
+        is_anonymous=False,      # Щоб ви могли бачити результати
+        allows_multiple_answers=False
+    )
+    print("Опитування надіслано успішно!")
 
-poll_id = poll_message.poll.id
+if __name__ == "__main__":
+    asyncio.run(main())
 
-POLL_META = {"poll_id": poll_id,
-             "date": wed,
-             "mesg_id": poll_message.message_id,
-             "options": OPTIONS}
+# poll_message = await bot.send_poll(
+#                 chat_id=CHAT_ID,
+#                 message_thread_id=THREAD_ID,
+#                 question=QUESTION,
+#                 options=OPTIONS,
+#                 is_anonymous=False)
+
+# poll_id = poll_message.poll.id
+
+# POLL_META = {"poll_id": poll_id,
+#              "date": wed,
+#              "mesg_id": poll_message.message_id,
+#              "options": OPTIONS}
