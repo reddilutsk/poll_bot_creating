@@ -49,10 +49,9 @@ def update_table(df_old, df_new):
 
   return df_clean
 
-# BOT_TOKEN = '7770236578:AAGrkL_bDEq9N6NLsKYTePL8Ac6XglN4t10'
-
-TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
-print(TOKEN)
+TOKEN = '7770236578:AAGrkL_bDEq9N6NLsKYTePL8Ac6XglN4t10'
+# TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
+# print(TOKEN)
 
 CHAT_ID = '-1002643965663'
 THREAD_ID = '16'
