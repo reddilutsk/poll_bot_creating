@@ -1,6 +1,7 @@
 import asyncio
 from telegram import Bot
 from datetime import date, timedelta
+import os
 
 
 UA_WEEKDAYS = {
@@ -48,7 +49,9 @@ def update_table(df_old, df_new):
 
   return df_clean
 
-BOT_TOKEN = '7770236578:AAGrkL_bDEq9N6NLsKYTePL8Ac6XglN4t10'
+# BOT_TOKEN = '7770236578:AAGrkL_bDEq9N6NLsKYTePL8Ac6XglN4t10'
+
+TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
 CHAT_ID = '-1002643965663'
 THREAD_ID = '16'
 
@@ -62,7 +65,7 @@ wed, thu = next_week_wed_thu(today=None)
 QUESTION = wed + QUESTION_W
 
 async def main():
-    bot = Bot(token=BOT_TOKEN)
+    bot = Bot(token=TOKEN)
     
     # Надсилаємо опитування
     await bot.send_poll(
