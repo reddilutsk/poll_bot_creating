@@ -86,8 +86,8 @@ async def main():
                             wed: ", ".join(answers)}
         
     new_df = pd.DataFrame.from_dict(results, orient='index')
-    await bot.stop_poll(chat_id=CHAT_ID,
-                        message_id=POLL_META[wed]['message_id'])
+    # await bot.stop_poll(chat_id=CHAT_ID,
+    #                     message_id=POLL_META[wed]['message_id'])
 
     gc = gspread.service_account(filename='credentials.json')
 
@@ -97,7 +97,8 @@ async def main():
     data = worksheet.get_all_values()
 
     old_df = pd.DataFrame(data[1:], columns=data[0])
-    old_df.set_index("User_ID", inplace=True)
+    if len(old_df) > 0:
+        old_df.set_index("User_ID", inplace=True)
 
     df = update_table(old_df, new_df)
     worksheet.clear()
