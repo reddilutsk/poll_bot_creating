@@ -64,7 +64,7 @@ async def main():
     await bot.delete_webhook(drop_pending_updates=False)
     results = {}
 
-    updates = await bot.get_updates()
+    updates = await bot.get_updates(timeout=10)
 
     for u in updates:
         if not u.poll_answer:
