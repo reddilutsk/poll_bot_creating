@@ -39,26 +39,6 @@ def next_week_wed_thu(today: date | None = None):
 
     return wed_str, thu_str
 
-def update_table(df_old, df_new):
-
-  df_old.index = df_old.index.astype(int)
-  df_new.index = df_new.index.astype(int)
-
-  df_combined = df_old.combine_first(df_new)  # залишає старі значення, якщо нових немає
-  df_combined.update(df_new)  # оновлюємо значення для існуючих рядків
-
-  # --- Додаємо нові колонки справа ---
-  old_cols = list(df_old.columns)
-  new_cols = [col for col in df_combined.columns if col not in old_cols]
-  ordered_cols = old_cols + new_cols
-  df_combined = df_combined[ordered_cols]
-
-  # Замінити NaN та нескінченність на пустий рядок
-  df_clean = df_combined.replace([float('inf'), float('-inf')], None).fillna('')
-  df_clean.index.name = "User_ID"
-
-  return df_clean
-
 TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
 
 CHAT_ID = '-1002643965663'
