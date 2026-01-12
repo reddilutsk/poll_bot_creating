@@ -93,9 +93,11 @@ async def main():
                     allows_multiple_answers=False)
 
     # Формуємо дані для збереження
-    data_to_save = { wed:{"message_id": w_poll_message.message_id,
+    data_to_save = { wed:{"poll_id": w_poll_message.poll.id,
+                          "message_id": w_poll_message.message_id,
                           "options": OPTIONS},
-                     thu:{"message_id": t_poll_message.message_id,
+                     thu:{"poll_id": t_poll_message.poll.id,
+                          "message_id": t_poll_message.message_id,
                           "options": OPTIONS},}
 
     # Записуємо у файл
