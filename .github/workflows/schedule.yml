@@ -2,9 +2,12 @@ name: Send Weekly Telegram Poll
 
 on:
   schedule:
-    # 00 хвилин, 09 годин, будь-який день, будь-який місяць, 1 — це Понеділок
-    - cron: '0 9 * * 1'
-  workflow_dispatch:      # Кнопка для ручного запуску
+    # 00 хвилин, 20 година (22:00 за Києвом), кожен день місяця, кожен місяць, 0 — це Неділя
+    - cron: '0 20 * * 0'
+  workflow_dispatch:      # Залишаємо кнопку для ручного запуску
+
+permissions:
+  contents: write         # Дозвіл на запис файлів у репозиторій
 
 jobs:
   send_poll:
@@ -18,10 +21,23 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install library
-        run: pip install python-telegram-bot
+      - name: Install libraries
+        run: |
+          pip install python-telegram-bot
+          # Додайте інші бібліотеки (наприклад, pandas), якщо вони потрібні в main.py
 
       - name: Run script
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         run: python main.py
+
+      - name: Commit and push poll data
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          # Перевіряємо, чи файл існує, щоб уникнути помилок при першому запуску
+          if [ -f poll_data.json ]; then
+            git add poll_data.json
+            git commit -m "Update poll data [skip ci]" || exit 0
+            git push
+          fi
