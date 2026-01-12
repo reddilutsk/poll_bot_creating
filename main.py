@@ -40,9 +40,8 @@ def next_week_wed_thu(today: date | None = None):
     return wed_str, thu_str
 
 TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
-
-CHAT_ID = '-1002643965663'
-THREAD_ID = '16'
+CHAT_ID = os.environ.get('TELEGRAM_CHAT_ID')
+THREAD_ID = os.environ.get('TELEGRAM_THREAD_ID')
 
 wed, thu = next_week_wed_thu(today=None)
 

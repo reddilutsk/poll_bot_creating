@@ -52,7 +52,7 @@ def extract_wed_thu(meta):
     return wed, thu
 
 TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
-CHAT_ID = '-1002643965663'
+CHAT_ID = os.environ.get('TELEGRAM_CHAT_ID')
 TABLE_NAME = 'Telegram Poll Results'
 
 POLL_META = load_poll_data()
