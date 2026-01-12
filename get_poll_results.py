@@ -56,7 +56,7 @@ CHAT_ID = os.environ.get('TELEGRAM_CHAT_ID')
 TABLE_NAME = 'Telegram Poll Results'
 
 POLL_META = load_poll_data()
-wed, _ = extract_wed_thu(POLL_META)
+_, wed = extract_wed_thu(POLL_META)
 
 bot = Bot(token=TOKEN)
 
