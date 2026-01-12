@@ -32,7 +32,7 @@ jobs:
       - name: Run collection script
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-        run: python main_collect.py  # Замініть на назву вашого файлу
+        run: python get_poll_results.py  # Замініть на назву вашого файлу
 
       - name: Cleanup credentials
         # Видаляємо файл ключів після роботи для безпеки
