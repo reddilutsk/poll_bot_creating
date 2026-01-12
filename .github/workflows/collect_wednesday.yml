@@ -1,0 +1,39 @@
+name: Collect Wednesday Results
+
+on:
+  schedule:
+    # 00 хвилин, 15 година UTC (17:00 за Києвом), кожен день місяця, кожен місяць, 3 — це Середа
+    - cron: '0 15 * * 3'
+  workflow_dispatch:      # Кнопка для ручного запуску
+
+permissions:
+  contents: write
+
+jobs:
+  collect_data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install libraries
+        run: |
+          pip install python-telegram-bot pandas gspread gspread-dataframe google-auth
+
+      - name: Create credentials.json
+        # Створюємо файл сервісного акаунту зі секрету GitHub
+        run: echo '${{ secrets.GSPREAD_CREDENTIALS }}' > credentials.json
+
+      - name: Run collection script
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        run: python main_collect.py  # Замініть на назву вашого файлу
+
+      - name: Cleanup credentials
+        # Видаляємо файл ключів після роботи для безпеки
+        run: rm credentials.json
